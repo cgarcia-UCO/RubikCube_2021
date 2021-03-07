@@ -64,6 +64,8 @@ class RubicCube:
         #TODO: It is interesting to have a method that reads the configuration of the cube from a file
         pass
 
+    #CUIDADO: Un compañero me ha comentado el error cometido aquí. La operacion implementada debería llamarse rotateFrontClockwise, pues rota la cara frontal
+    #No lo cambio esperando un pull request.
     def rotateTopClockwise(self):
         #TODO: This method should modify the configuration of the cube resulting in the rotation of the top face
         # clockwisely
