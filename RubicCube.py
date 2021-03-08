@@ -182,7 +182,7 @@ def rotateTopAnticlockwise_test1():
     if not c1.equals(c2):
         print('There is an error rotating top either clockwisely or anticlockwisely')
 
-def rotateLeftClocksie_test1():
+def rotateLeftClockwise_test1():
     c1 = RubicCube()
     c2 = RubicCube()
 
@@ -213,7 +213,7 @@ def runTests():
     rotateTopClockwise_test1()
     rotateTopAnticlockwise_test1()
     rotateCubeLeftToRight_test1()
-    rotateLeftClocksie_test1()
+    rotateLeftClockwise_test1()
 
 
 if __name__=="__main__":
