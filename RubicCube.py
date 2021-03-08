@@ -65,7 +65,8 @@ class RubicCube:
         pass
 
     #CUIDADO: Un compañero me ha comentado el error cometido aquí. La operacion implementada debería llamarse rotateFrontClockwise, pues rota la cara frontal
-    #No lo cambio esperando un pull request.
+    #No lo cambio esperando un pull request. De la misma forma, hoy en clase me he dado cuenta de que he hecho cambios en las caras adyacentes a la frontal,
+    #pero no he rotado la frontal
     def rotateTopClockwise(self):
         #TODO: This method should modify the configuration of the cube resulting in the rotation of the top face
         # clockwisely
