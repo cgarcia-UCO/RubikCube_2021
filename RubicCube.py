@@ -50,6 +50,12 @@ class RubicCube:
 
     def copy(self, aCube):
         #TODO: This method should copy the configuration of aCube into self
+        self._top = aCube._top
+        self._left = aCube._left
+        self._front = aCube._front
+        self._right = aCube._right
+        self._back = aCube._back
+        self._bottom = aCube._bottom
         pass
 
     def equals(self, aCube):
