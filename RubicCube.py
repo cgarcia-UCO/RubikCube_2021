@@ -45,7 +45,7 @@ class RubicCube:
             print('')
 
     def clone(self):
-        #TODO: This method should return another instance of RubicCube with the same configuration as self
+        #TODO: This method should return another instance of RubicCube with the same configuration as self 
         c = RubicCube()
         c.copy(self)
         return c
