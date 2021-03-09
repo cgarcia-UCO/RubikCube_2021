@@ -175,7 +175,7 @@ def rotateTopClockwise_test1():
     c1.rotateTopClockwise()
 
     if not c1.equals(c2):
-        print('There is an error rotating top clockwisely')
+        print('ERROR: There is an error rotating top clockwisely')
 
 def rotateTopAnticlockwise_test1():
     c1 = RubicCube()
@@ -186,7 +186,7 @@ def rotateTopAnticlockwise_test1():
     c2.rotateTopAntiClockwise()
 
     if not c1.equals(c2):
-        print('There is an error rotating top either clockwisely or anticlockwisely')
+        print('ERROR: There is an error rotating top either clockwisely or anticlockwisely')
 
 def rotateLeftClockwise_test1():
     c1 = RubicCube()
@@ -198,7 +198,7 @@ def rotateLeftClockwise_test1():
     c1._rotateCubeRightToLeft()
 
     if not c1.equals(c2):
-        print('There is an error rotating either left clockwise, the whole cube from left to right or from right to'
+        print('ERROR: There is an error rotating either left clockwise, the whole cube from left to right or from right to'
               ' left, or front clockwise')
 
 
@@ -212,10 +212,37 @@ def rotateCubeLeftToRight_test1():
     c1._rotateCubeLeftToRight()
 
     if not c1.equals(c2):
-        print('There is an error rotating the whole cube from left to right')
+        print('ERROR: There is an error rotating the whole cube from left to right')
+
+
+def copyCube_test1():
+    c1 = RubicCube()
+    c2 = RubicCube()
+
+    if not c1.equals(c2):
+        print("ERROR: Two cubes have been created, but their initial states are not the same")
+
+    c1.rotateTopClockwise()
+
+    if c1.equals(c2):
+        print("ERROR: Two exepected equal cubes remain the same after a rotateTopClockwise operation has been"
+              " performed on one of them")
+
+    c2.copy(c1)
+
+    if not c1.equals(c2):
+        print("ERROR: Two cubes are different just after one copy the state of the other")
+
+    c1.rotateTopClockwise()
+
+    if c1.equals(c2):
+        print("ERROR: Two exepected equal cubes remain the same after a copy and a rotateTopClockwise operation has been"
+              " performed on one of them. This means that both cubes use the same internal matrices. They have not been"
+              " copied, but the cubes use the same matrices instead")
 
 
 def runTests():
+    copyCube_test1()
     rotateTopClockwise_test1()
     rotateTopAnticlockwise_test1()
     rotateCubeLeftToRight_test1()
