@@ -74,6 +74,35 @@ class RubicCube:
 
     def write(self, filename):
         #TODO: It is interesting to have a method that writes the configuration of the cube into a file
+        try:
+            f = open(filename, 'w')
+            for i in range(3):
+                f.write("    ")
+                for j in range(3):
+                    f.write(self._top[i][j])
+                f.write('\n')
+    
+            for i in range(3):
+                for j in range(3):
+                    f.write(self._left[i][j])
+                f.write('|')
+                for j in range(3):
+                    f.write(self._front[i][j])
+                f.write('|')
+                for j in range(3):
+                    f.write(self._right[i][j])
+                f.write('|')
+                for j in range(3):
+                    f.write(self._back[i][j])
+                f.write('\n')
+    
+            for i in range(3):
+                f.write("    ")
+                for j in range(3):
+                    f.write(self._bottom[i][j])
+                f.write('\n')
+        finally:
+            f.close()
         pass
 
     def read(self, filename):
@@ -231,6 +260,7 @@ if __name__=="__main__":
     print('-------FRONT ROTATION---------')
     c.rotateTopClockwise()
     c.print()
+    c.write("state.txt")
 
     print('\n----------------')
     c = RubicCube()
