@@ -107,6 +107,35 @@ class RubicCube:
 
     def read(self, filename):
         #TODO: It is interesting to have a method that reads the configuration of the cube from a file
+        try:
+            f = open(filename, 'r')
+            for i in range(3):
+                f.read(4)
+                for j in range(3):
+                    self._top[i][j] = f.read(1)
+                f.read(1)
+    
+            for i in range(3):
+                for j in range(3):
+                    self._left[i][j] = f.read(1)
+                f.read(1)
+                for j in range(3):
+                    self._front[i][j] = f.read(1)
+                f.read(1)
+                for j in range(3):
+                    self._right[i][j] = f.read(1)
+                f.read(1)
+                for j in range(3):
+                    self._back[i][j] = f.read(1)
+                f.read(1)
+    
+            for i in range(3):
+                f.read(4)
+                for j in range(3):
+                    self._bottom[i][j] = f.read(1)
+                f.read(1)
+        finally:
+            f.close()
         pass
 
     #CUIDADO: Un compañero me ha comentado el error cometido aquí. La operacion implementada debería llamarse rotateFrontClockwise, pues rota la cara frontal
@@ -260,7 +289,6 @@ if __name__=="__main__":
     print('-------FRONT ROTATION---------')
     c.rotateTopClockwise()
     c.print()
-    c.write("state.txt")
 
     print('\n----------------')
     c = RubicCube()
