@@ -60,14 +60,15 @@ class RubicCube:
         self._bottom = aCube._bottom
 
     def equals(self, aCube):
+        faces1 = [self._top, self._bottom, self._left, self._front, self._right, self._back]
+        faces2 = [aCube._top, aCube._bottom, aCube._left, aCube._front, aCube._right, aCube._back]
 
-        for i in range(3):
-            for j in range(3):
-                if aCube._top[i][j] != self._top[i][j] or aCube._left[i][j] != self._left[i][j] or aCube._front[i][j] != self._front[i][j] or aCube._right[i][j] != self._right[i][j] or aCube._back[i][j] != self._back[i][j] or aCube._bottom[i][j] != self._bottom[i][j]:
-                    return False
-    
+        for face1, face2 in zip(faces1, faces2):
+            for i in range(3):
+                for j in range(3):
+                    if face1[i][j] != face2[i][j]:
+                        return False
         return True
-
 
     def write(self, filename):
         #TODO: It is interesting to have a method that writes the configuration of the cube into a file
@@ -180,6 +181,15 @@ class RubicCube:
         #TODO....
         pass
 
+    def rotateLeftClockwise(self):
+        #TODO....
+        pass
+
+    def rotateFrontClockwise(self):
+        #TODO....
+        pass
+
+
 
     #The following function generalizes the process of rotating a face clockwise.
     #BUT JUST THE FACE. This does not consider the adyacent columns and rows of other faces
@@ -228,8 +238,15 @@ class RubicCube:
         self._rotateClockwise(self._bottom)
 
     def _rotateCubeRightToLeft(self):
-        #TODO...
-        pass
+        aux = self._right
+        self._right = self._back
+        self._back = self._left
+        self._left = self._front
+        self._front = aux
+
+        #Rotate top and bottom faces accordingly
+        self._rotateClockwise(self._top)
+        self._rotateAntiClockwise(self._bottom)
 
 
 #######
@@ -242,8 +259,8 @@ def rotateTopClockwise_test1():
     c2 = RubicCube()
     c1.rotateTopClockwise()
     c1.rotateTopClockwise()
-    #c1.rotateTopClockwise()
-    #c1.rotateTopClockwise()
+    c1.rotateTopClockwise()
+    c1.rotateTopClockwise()
 
     if not c1.equals(c2):
         print('There is an error rotating top clockwisely')
@@ -286,6 +303,8 @@ def rotateCubeLeftToRight_test1():
         print('ERROR: There is an error rotating the whole cube from left to right')
 
 
+
+
 def copyCube_test1():
     c1 = RubicCube()
     c2 = RubicCube()
@@ -317,40 +336,24 @@ def runTests():
     rotateTopClockwise_test1()
     rotateTopAnticlockwise_test1()
     rotateCubeLeftToRight_test1()
-    #rotateLeftClockwise_test1()
+    rotateLeftClockwise_test1()
 
 
 
 if __name__=="__main__":
-    
-    print('-------INITIAL STATE---------')
     c = RubicCube()
     c.print()
-    print('\n----------------')
-
-
     print('-------FRONT ROTATION---------')
     c.rotateTopClockwise()
     c.print()
-    print('\n----------------')
 
+    print('\n\n\n--------------------------------------')
+    c = RubicCube()
+    c.print()
     print('-------CUBE LEFT->RIGHT ROTATION---------')
     c._rotateCubeLeftToRight()
     c.print()
 
-    print('\n------------------------------------')
-
-    c1 = RubicCube()
-    if not c1.equals(c):
-        print("cubes are not equals due to rotation")
-
-    
-    c2 = RubicCube()
-    c2.copy(c1)
-
-    c3 = c2.clone()
-
-    if c2.equals(c3):
-        print("cubes are equals after copying c1 and cloning c2")
     #Checking rotateTopClockwise
     runTests()
+
