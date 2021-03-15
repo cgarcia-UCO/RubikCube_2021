@@ -160,12 +160,32 @@ class RubicCube:
 
         
     def rotateTopClockwise(self):
-        #TODO...
-        pass
+        #TODO: This method should modify the configuration of the cube resulting in the rotation of the front face
+        # clockwisely
+                
+        aux = [self._front[0][i] for i in range(3)]
+        for i in range(3):
+            self._front[0][i] = self._right[0][i]
+            self._right[0][i] = self._back[0][i]            
+            self._back[0][i] = self._left[0][i]
+            self._left[0][i] = aux[i]
+
+           
+        self._rotateClockwise(self._top)
+    
 
     def rotateTopAntiClockwise(self):
-        #TODO....
-        pass
+                
+        aux = [self._front[0][i] for i in range(3)]
+        for i in range(3):
+            self._front[0][i] = self._left[0][i]
+            self._left[0][i] = self._back[0][i]            
+            self._back[0][i] = self._right[0][i]
+            self._right[0][i] = aux[i]
+
+           
+        self._rotateAntiClockwise(self._top)
+    
 
     def rotateLeftClockwise(self):
         #TODO....
@@ -377,11 +397,18 @@ def runTests():
 if __name__=="__main__":
     c = RubicCube()
     c.print()
-    print('-------FRONT ROTATION---------')
+    print('\n\n----------------------------')
+    print('-------TOP ROTATION---------')
     c.rotateTopClockwise()
     c.print()
 
-    print('\n\n\n--------------------------------------')
+    print('\n\n----------------------------')
+    print('-------FRONT ROTATION---------')
+    c.rotateFrontClockwise()
+    c.print()
+    
+
+    print('\n\n----------------------------------------')
     c = RubicCube()
     c.print()
     print('-------CUBE LEFT->RIGHT ROTATION---------')
