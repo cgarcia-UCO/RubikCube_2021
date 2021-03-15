@@ -182,6 +182,7 @@ class RubicCube:
 
     def rotateLeftClockwise(self):
         # TODO....
+        print("Rotate left clockwise is not implemented yet")
         pass
 
     # The following function generalizes the process of rotating a face clockwise.
