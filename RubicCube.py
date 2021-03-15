@@ -45,7 +45,7 @@ class RubicCube:
             print('')
 
     def clone(self):
-        #TODO: This method should return another instance of RubicCube with the same configuration as self
+        #TODO: This method should return another instance of RubicCube with the same configuration as self 
         c = RubicCube()
         c.copy(self)
         return c
@@ -105,6 +105,7 @@ class RubicCube:
             f.close()
 
     def read(self, filename):
+        #TODO: It is interesting to have a method that reads the configuration of the cube from a file
         try:
             f = open(filename, 'r')
             for i in range(3):
@@ -139,7 +140,7 @@ class RubicCube:
  
 
     def rotateFrontClockwise(self):
-        #TODO: This method should modify the configuration of the cube resulting in the rotation of the top face
+        #TODO: This method should modify the configuration of the cube resulting in the rotation of the front face
         # clockwisely
         aux = [self._right[i][0] for i in range(3)]
 
@@ -154,32 +155,37 @@ class RubicCube:
 
         for i in range(3):
             self._bottom[0][2-i] = aux[i]
+            
+        self._rotateClockwise(self._front)
 
-
-
+        
     def rotateTopClockwise(self):
-        #TODO: This method should modify the configuration of the cube resulting in the rotation of the top face
+        #TODO: This method should modify the configuration of the cube resulting in the rotation of the front face
         # clockwisely
-        #He cambido la función por que lo que hacía era rotar la cara frontal
-        
-        aux = [self._right[0][i] for i in range(3)]
-
+                
+        aux = [self._front[0][i] for i in range(3)]
         for i in range(3):
-            self._right[0][i] = self._front[0][i]
-        
-        for i in range(3):
-            self._front[0][i] = self._left[0][i]
+            self._front[0][i] = self._right[0][i]
+            self._right[0][i] = self._back[0][i]            
+            self._back[0][i] = self._left[0][i]
+            self._left[0][i] = aux[i]
 
-        for i in range(3):
-            self._left[0][i] = self._back[0][i]
-
-        for i in range(3):
-            self._back[0][i] = aux[i]
-
+           
+        self._rotateClockwise(self._top)
+    
 
     def rotateTopAntiClockwise(self):
-        #TODO....
-        pass
+                
+        aux = [self._front[0][i] for i in range(3)]
+        for i in range(3):
+            self._front[0][i] = self._left[0][i]
+            self._left[0][i] = self._back[0][i]            
+            self._back[0][i] = self._right[0][i]
+            self._right[0][i] = aux[i]
+
+           
+        self._rotateAntiClockwise(self._top)
+    
 
     def rotateLeftClockwise(self):
         #TODO....
@@ -189,8 +195,7 @@ class RubicCube:
         #TODO....
         pass
 
-
-
+      
     #The following function generalizes the process of rotating a face clockwise.
     #BUT JUST THE FACE. This does not consider the adyacent columns and rows of other faces
     def _rotateClockwise(self, face):
@@ -248,7 +253,6 @@ class RubicCube:
         self._rotateClockwise(self._top)
         self._rotateAntiClockwise(self._bottom)
 
-
 #######
 #TEST FUNCTIONS
 #######
@@ -263,7 +267,7 @@ def rotateTopClockwise_test1():
     c1.rotateTopClockwise()
 
     if not c1.equals(c2):
-        print('There is an error rotating top clockwisely')
+        print('ERROR: There is an error rotating top clockwisely')
 
 def rotateTopAnticlockwise_test1():
     c1 = RubicCube()
@@ -274,7 +278,20 @@ def rotateTopAnticlockwise_test1():
     c2.rotateTopAntiClockwise()
 
     if not c1.equals(c2):
-        print('There is an error rotating top either clockwisely or anticlockwisely')
+        print('ERROR: There is an error rotating top either clockwisely or anticlockwisely')
+
+def rotateLeftClockwise_test1():
+    c1 = RubicCube()
+    c2 = RubicCube()
+
+    c2.rotateLeftClockwise()
+    c1._rotateCubeLeftToRight()
+    c1.rotateFrontClockwise()
+    c1._rotateCubeRightToLeft()
+
+    if not c1.equals(c2):
+        print('ERROR: There is an error rotating either left clockwise, the whole cube from left to right or from right to'
+              ' left, or front clockwise')
 
 def rotateLeftClockwise_test1():
     c1 = RubicCube()
@@ -330,6 +347,44 @@ def copyCube_test1():
               " performed on one of them. This means that both cubes use the same internal matrices. They have not been"
               " copied, but the cubes use the same matrices instead")
 
+def rotateCubeLeftToRight_test1():
+    c1 = RubicCube()
+    c2 = RubicCube()
+
+    c1._rotateCubeLeftToRight()
+    c1._rotateCubeLeftToRight()
+    c1._rotateCubeLeftToRight()
+    c1._rotateCubeLeftToRight()
+
+    if not c1.equals(c2):
+        print('ERROR: There is an error rotating the whole cube from left to right')
+
+
+def copyCube_test1():
+    c1 = RubicCube()
+    c2 = RubicCube()
+
+    if not c1.equals(c2):
+        print("ERROR: Two cubes have been created, but their initial states are not the same")
+
+    c1.rotateTopClockwise()
+
+    if c1.equals(c2):
+        print("ERROR: Two exepected equal cubes remain the same after a rotateTopClockwise operation has been"
+              " performed on one of them")
+
+    c2.copy(c1)
+
+    if not c1.equals(c2):
+        print("ERROR: Two cubes are different just after one copy the state of the other")
+
+    c1.rotateTopClockwise()
+
+    if c1.equals(c2):
+        print("ERROR: Two exepected equal cubes remain the same after a copy and a rotateTopClockwise operation has been"
+              " performed on one of them. This means that both cubes use the same internal matrices. They have not been"
+              " copied, but the cubes use the same matrices instead")
+
 
 def runTests():
     copyCube_test1()
@@ -339,21 +394,25 @@ def runTests():
     rotateLeftClockwise_test1()
 
 
-
 if __name__=="__main__":
     c = RubicCube()
     c.print()
-    print('-------FRONT ROTATION---------')
+    print('\n\n----------------------------')
+    print('-------TOP ROTATION---------')
     c.rotateTopClockwise()
     c.print()
 
-    print('\n\n\n--------------------------------------')
+    print('\n\n----------------------------')
+    print('-------FRONT ROTATION---------')
+    c.rotateFrontClockwise()
+    c.print()
+    
+
+    print('\n\n----------------------------------------')
     c = RubicCube()
     c.print()
     print('-------CUBE LEFT->RIGHT ROTATION---------')
     c._rotateCubeLeftToRight()
     c.print()
 
-    #Checking rotateTopClockwise
     runTests()
-
