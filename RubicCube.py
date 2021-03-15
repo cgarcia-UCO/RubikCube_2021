@@ -142,19 +142,13 @@ class RubicCube:
     def rotateFrontClockwise(self):
         #TODO: This method should modify the configuration of the cube resulting in the rotation of the front face
         # clockwisely
-        aux = [self._right[i][0] for i in range(3)]
+        aux = [self._bottom[0][i] for i in range(3)]
 
         for i in range(3):
-            self._right[i][0] = self._top[2][i]
-
-        for i in range(3):
+            self._bottom[0][i] = self._right[2-i][0]
+            self._right[2-i][0] = self._top[2][2-i]
             self._top[2][2-i] = self._left[i][2]
-
-        for i in range(3):
-            self._left[i][2] = self._bottom[0][i]
-
-        for i in range(3):
-            self._bottom[0][2-i] = aux[i]
+            self._left[i][2] = aux[i]
             
         self._rotateClockwise(self._front)
 
@@ -191,9 +185,6 @@ class RubicCube:
         #TODO....
         pass
 
-    def rotateFrontClockwise(self):
-        #TODO....
-        pass
 
       
     #The following function generalizes the process of rotating a face clockwise.
@@ -404,8 +395,10 @@ if __name__=="__main__":
 
     print('\n\n----------------------------')
     print('-------FRONT ROTATION---------')
-    c.rotateFrontClockwise()
-    c.print()
+    c2 = RubicCube()
+    #c2=c.clone()
+    c2.rotateFrontClockwise()
+    c2.print()
     
 
     print('\n\n----------------------------------------')
