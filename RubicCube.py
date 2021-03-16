@@ -399,7 +399,7 @@ def runTests():
 if __name__ == "__main__":
     c = RubicCube()
     c.print()
-    '''
+    
     print('\n\n----------------------------')
     print('-------TOP ROTATION---------')
     c.rotateTopClockwise()
@@ -409,7 +409,7 @@ if __name__ == "__main__":
     print('-------FRONT ROTATION---------')
     c.rotateFrontClockwise()
     c.print()
-    '''
+    
     print('\n\n----------------------------')
     print('-------LEFT ROTATION---------')
     c = RubicCube()
