@@ -193,6 +193,19 @@ class RubicCube:
         self._rotateClockwise(self._left)
 
 
+    def rotateLeftAntiClockwise(self):
+      
+        aux = [self._bottom[i][0] for i in range(3)]
+      
+        for i in range(3):
+            self._bottom[i][0] = self._back[2-i][2]
+            self._back[2-i][2] = self._top[i][0]
+            self._top[i][0] = self._front[i][0]
+            self._front[i][0] = aux[i]
+
+        self._rotateAntiClockwise(self._left)
+
+
     # The following function generalizes the process of rotating a face clockwise.
     # BUT JUST THE FACE. This does not consider the adyacent columns and rows of other faces
     def _rotateClockwise(self, face):
