@@ -181,9 +181,28 @@ class RubicCube:
         self._rotateAntiClockwise(self._top)
 
     def rotateLeftClockwise(self):
-        # TODO....
-        print("Rotate left clockwise is not implemented yet")
-        pass
+        aux = [self._bottom[i][0] for i in range(3)]
+      
+        for i in range(3):
+            self._bottom[i][0] = self._front[i][0]
+            self._front[i][0] = self._top[i][0]
+            self._top[i][0] = self._back[2-i][2]
+            self._back[2-i][2] = aux[i]
+
+        self._rotateClockwise(self._left)
+
+
+    def rotateLeftAntiClockwise(self):
+      
+        aux = [self._bottom[i][0] for i in range(3)]
+      
+        for i in range(3):
+            self._bottom[i][0] = self._back[2-i][2]
+            self._back[2-i][2] = self._top[i][0]
+            self._top[i][0] = self._front[i][0]
+            self._front[i][0] = aux[i]
+
+        self._rotateAntiClockwise(self._left)
 
     # The following function generalizes the process of rotating a face clockwise.
     # BUT JUST THE FACE. This does not consider the adyacent columns and rows of other faces
@@ -378,6 +397,7 @@ def runTests():
 if __name__ == "__main__":
     c = RubicCube()
     c.print()
+    
     print('\n\n----------------------------')
     print('-------TOP ROTATION---------')
     c.rotateTopClockwise()
@@ -386,6 +406,12 @@ if __name__ == "__main__":
     print('\n\n----------------------------')
     print('-------FRONT ROTATION---------')
     c.rotateFrontClockwise()
+    c.print()
+    
+    print('\n\n----------------------------')
+    print('-------LEFT ROTATION---------')
+    c = RubicCube()
+    c.rotateLeftClockwise()
     c.print()
 
     print('\n\n----------------------------------------')
