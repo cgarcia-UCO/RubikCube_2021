@@ -324,6 +324,21 @@ class RubicCube:
         self._rotateClockwise(self._top)
         self._rotateAntiClockwise(self._bottom)
 
+    def _rotateCubeTopToBottom(self):
+        #TODO...
+        print("ERROR: _rotateCubeTopToBottom is not implemented yet")
+
+    def _rotateCubeBottomToTop(self):
+        #TODO...
+        print("ERROR: _rotateCubeBottomToTop is not implemented yet")
+
+    def _rotateCubeClockwise(self):
+        #TODO...
+        print("ERROR: _rotateCubeClockwise is not implemented yet")
+
+    def _rotateCubeAntiClockwise(self):
+        #TODO...
+        print("ERROR: _rotateCubeAntiClockwise is not implemented yet")
 
 #######
 # TEST FUNCTIONS
@@ -486,7 +501,13 @@ def runTests():
     test_4rotationsDonothing('rotateBottomAntiClockwise')
     test_4rotationsDonothing('_rotateCubeLeftToRight')
     test_4rotationsDonothing('_rotateCubeRightToLeft')
-    
+    test_4rotationsDonothing('_rotateCubeTopToBottom')
+    test_4rotationsDonothing('_rotateCubeBottomToTop')
+    test_4rotationsDonothing('_rotateCubeClockwise')
+    test_4rotationsDonothing('_rotateCubeAntiClockwise')
+
+
+
 
 
 if __name__ == "__main__":
