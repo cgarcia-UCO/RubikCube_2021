@@ -442,6 +442,7 @@ def test_4rotationsDonothing(func):
         print("ERROR: Applying ", func, " four times has not produced the original state")
 
 def test_3and1oppositeOperations(func1, func2):
+    '''This function tests that three applications of one operation produces the same result than one operation of the opposite operation'''
     c1 = RubicCube()
     c2 = RubicCube()
 
