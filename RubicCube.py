@@ -458,6 +458,24 @@ def test_3and1oppositeOperations(func1, func2):
     if not c1.equals(c2):
         print("ERROR: Applying ", func1, " three times and ", func2, " once on an original copy does not produce the same result")
 
+def test_complimentaryOperation(func1, cubeRotation, func2, cubeAntiRotation):
+    '''This function tests one operation produces the same result as the associated operation once the cube has been rotated.
+    For instance, rotatingLeftClockwise should produce the same result as rotating the cube from left to right, rotating the front face clockwise, and rotating the cube back from right to left'''
+    c1 = RubicCube()
+    c2 = RubicCube()
+
+    getattr(c1, func1)()
+
+    if c1.equals(c2):
+        print("ERROR: ", func1, " has done nothing")
+
+    getattr(c2,cubeRotation)()
+    getattr(c2,func2)()
+    getattr(c2,cubeAntiRotation)()
+
+    if not c1.equals(c2):
+        print("ERROR: test_complimentaryOperation with ", func1, " ", cubeRotation, " ", func2, " ", cubeAntiRotation, "three times and ", func2, " failed")
+
 
 def rotateCubeLeftToRight_test1():
     c1 = RubicCube()
@@ -544,6 +562,13 @@ def runTests():
     test_3and1oppositeOperations('_rotateCubeClockwise','_rotateCubeAntiClockwise')
     test_3and1oppositeOperations('_rotateCubeAntiClockwise','_rotateCubeClockwise')
 
+    test_complimentaryOperation('rotateLeftClockwise','_rotateCubeLeftToRight','rotateFrontClockwise','_rotateCubeRightToLeft')
+    test_complimentaryOperation('rotateRightClockwise','_rotateCubeClockwise','rotateBottomClockwise','_rotateCubeAntiClockwise')
+    test_complimentaryOperation('rotateBackAntiClockwise','_rotateCubeTopToBottom','rotateTopAntiClockwise','_rotateCubeBottomToTop')
+    test_complimentaryOperation('rotateFrontAntiClockwise','_rotateCubeLeftToRight','rotateRightAntiClockwise','_rotateCubeRightToLeft')
+    test_complimentaryOperation('rotateBottomAntiClockwise','_rotateCubeAntiClockwise','rotateRightAntiClockwise','_rotateCubeClockwise')
+    test_complimentaryOperation('rotateTopClockwise','_rotateCubeBottomToTop','rotateBackClockwise','_rotateCubeTopToBottom')
+    #test_complimentaryOperation('','','','')
 
 
 if __name__ == "__main__":
