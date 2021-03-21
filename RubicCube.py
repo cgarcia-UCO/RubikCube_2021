@@ -424,6 +424,8 @@ def copyCube_test1():
             " copied, but the cubes use the same matrices instead")
 
 def test_4rotationsDonothing(func):
+    '''This function tests that one application of func on the cube modifies the cube, and that four operations
+    get it back to the original state'''
     c1 = RubicCube()
     c2 = RubicCube()
 
@@ -438,6 +440,22 @@ def test_4rotationsDonothing(func):
 
     if not c1.equals(c2):
         print("ERROR: Applying ", func, " four times has not produced the original state")
+
+def test_3and1oppositeOperations(func1, func2):
+    c1 = RubicCube()
+    c2 = RubicCube()
+
+    getattr(c1, func1)()
+
+    if c1.equals(c2):
+        print("ERROR: ", func1, " has done nothing")
+
+    getattr(c1, func1)()
+    getattr(c1, func1)()
+    getattr(c2, func2)()
+
+    if not c1.equals(c2):
+        print("ERROR: Applying ", func1, " three times and ", func2, " once on an original copy does not produce the same result")
 
 
 def rotateCubeLeftToRight_test1():
@@ -506,7 +524,24 @@ def runTests():
     test_4rotationsDonothing('_rotateCubeClockwise')
     test_4rotationsDonothing('_rotateCubeAntiClockwise')
 
-
+    test_3and1oppositeOperations('rotateTopClockwise', 'rotateTopAntiClockwise')
+    test_3and1oppositeOperations('rotateTopAntiClockwise', 'rotateTopClockwise')
+    test_3and1oppositeOperations('rotateLeftClockwise', 'rotateLeftAntiClockwise')
+    test_3and1oppositeOperations('rotateLeftAntiClockwise', 'rotateLeftClockwise')
+    test_3and1oppositeOperations('rotateFrontClockwise', 'rotateFrontAntiClockwise')
+    test_3and1oppositeOperations('rotateFrontAntiClockwise', 'rotateFrontClockwise')
+    test_3and1oppositeOperations('rotateRightClockwise', 'rotateRightAntiClockwise')
+    test_3and1oppositeOperations('rotateRightAntiClockwise', 'rotateRightClockwise')
+    test_3and1oppositeOperations('rotateBackClockwise', 'rotateBackAntiClockwise')
+    test_3and1oppositeOperations('rotateBackAntiClockwise', 'rotateBackClockwise')
+    test_3and1oppositeOperations('rotateBottomClockwise', 'rotateBottomAntiClockwise')
+    test_3and1oppositeOperations('rotateBottomAntiClockwise', 'rotateBottomClockwise')
+    test_3and1oppositeOperations('_rotateCubeLeftToRight','_rotateCubeRightToLeft')
+    test_3and1oppositeOperations('_rotateCubeRightToLeft','_rotateCubeLeftToRight')
+    test_3and1oppositeOperations('_rotateCubeTopToBottom','_rotateCubeBottomToTop')
+    test_3and1oppositeOperations('_rotateCubeBottomToTop','_rotateCubeTopToBottom')
+    test_3and1oppositeOperations('_rotateCubeClockwise','_rotateCubeAntiClockwise')
+    test_3and1oppositeOperations('_rotateCubeAntiClockwise','_rotateCubeClockwise')
 
 
 
