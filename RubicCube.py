@@ -44,13 +44,13 @@ class RubicCube:
             print('')
 
     def clone(self):
-        # TODO: This method should return another instance of RubicCube with the same configuration as self
+        #This method should return another instance of RubicCube with the same configuration as self
         c = RubicCube()
         c.copy(self)
         return c
 
     def copy(self, aCube):
-        # TODO: This method should copy the configuration of aCube into self
+        #This method should copy the configuration of aCube into self
         self._top = aCube._top
         self._left = aCube._left
         self._front = aCube._front
@@ -70,7 +70,7 @@ class RubicCube:
         return True
 
     def write(self, filename):
-        # TODO: It is interesting to have a method that writes the configuration of the cube into a file
+        #It is interesting to have a method that writes the configuration of the cube into a file
         try:
             f = open(filename, 'w')
             for i in range(3):
@@ -104,7 +104,7 @@ class RubicCube:
             f.close()
 
     def read(self, filename):
-        # TODO: It is interesting to have a method that reads the configuration of the cube from a file
+        #It is interesting to have a method that reads the configuration of the cube from a file
         try:
             f = open(filename, 'r')
             for i in range(3):
@@ -138,7 +138,7 @@ class RubicCube:
             f.close()
 
     def rotateFrontClockwise(self):
-        # TODO: This method should modify the configuration of the cube resulting in the rotation of the front face
+        #This method should modify the configuration of the cube resulting in the rotation of the front face
         # clockwisely
         aux = [self._right[i][0] for i in range(3)]
 
@@ -158,7 +158,7 @@ class RubicCube:
 
     def rotateFrontAntiClockwise(self):
 
-        # TODO: This method should modify the configuration of the cube resulting in the rotation of the front face
+        #This method should modify the configuration of the cube resulting in the rotation of the front face
         # anticlockwisely
         aux = [self._bottom[0][i] for i in range(3)]
 
@@ -175,7 +175,7 @@ class RubicCube:
         self._rotateAntiClockwise(self._front)
 
     def rotateTopClockwise(self):
-        # TODO: This method should modify the configuration of the cube resulting in the rotation of the front face
+        #This method should modify the configuration of the cube resulting in the rotation of the front face
         # clockwisely
 
         aux = [self._front[0][i] for i in range(3)]
@@ -223,7 +223,7 @@ class RubicCube:
         self._rotateAntiClockwise(self._left)
 
     def rotateBackClockwise(self):
-        # TODO: This method should modify the configuration of the cube resulting in the rotation of the back face
+        #This method should modify the configuration of the cube resulting in the rotation of the back face
         # clockwisely
         aux = [self._bottom[2][2 - i] for i in range(3)]
 
@@ -239,7 +239,7 @@ class RubicCube:
         self._rotateClockwise(self._back)
 
     def rotateBottomClockwise(self):
-        # TODO: This method should modify the configuration of the cube resulting in the rotation of the bottom face
+        #This method should modify the configuration of the cube resulting in the rotation of the bottom face
         # clockwisely
         aux = [self._front[2][i] for i in range(3)]
 
