@@ -16,6 +16,17 @@ class RubicCube:
         self._back = [['e', 'e', 'e'], ['e', 'e', 'e'], ['e', 'e', 'e']]
         self._bottom = [['f', 'f', 'f'], ['f', 'f', 'f'], ['f', 'f', 'f']]
 
+    def colorsArranged(self):
+        '''This function tests if all the symbols in the same face are the same symbols'''
+        faces = [self._top, self._left, self._front, self._right, self._back, self._bottom]
+
+        for face in faces:
+            for i in range(3):
+                for j in range(3):
+                    if face[i][j] != face[1][1]:
+                        return False
+        return True
+
     def print(self):
         for i in range(3):
             print("    ", end='')
@@ -516,6 +527,22 @@ def copyCube_test1():
             " performed on one of them. This means that both cubes use the same internal matrices. They have not been"
             " copied, but the cubes use the same matrices instead")
 
+def test_colorsArranged():
+    c1 = RubicCube()
+
+    if c1.colorsArranged():
+        print("WARNING: The cube have the colors arranged at the beginning")
+
+    c1.setStandardSolution()
+
+    if not c1.colorsArranged():
+        print("ERROR: the cube with the standard solution does not return True for colorsGrouped method")
+
+    c1.rotateFrontClockwise()
+
+    if c1.colorsArranged():
+        print("ERROR: the cube with the standard solution and front face rotated clockwise once says that has its color arranged")
+
 
 def runTests():
     copyCube_test1()
@@ -570,6 +597,7 @@ def runTests():
     test_complimentaryOperation('rotateTopClockwise','_rotateCubeBottomToTop','rotateBackClockwise','_rotateCubeTopToBottom')
     #test_complimentaryOperation('','','','')
 
+    test_colorsArranged()
 
 if __name__ == "__main__":
     c = RubicCube()
