@@ -16,6 +16,17 @@ class RubicCube:
         self._back = [['e', 'e', 'e'], ['e', 'e', 'e'], ['e', 'e', 'e']]
         self._bottom = [['f', 'f', 'f'], ['f', 'f', 'f'], ['f', 'f', 'f']]
 
+    def colorsArranged(self):
+        '''This function tests if all the symbols in the same face are the same symbols'''
+        faces = [self._top, self._left, self._front, self._right, self._back, self._bottom]
+
+        for face in faces:
+            for i in range(3):
+                for j in range(3):
+                    if face[i][j] != face[1][1]:
+                        return False
+        return True
+
     def print(self):
         for i in range(3):
             print("    ", end='')
@@ -44,13 +55,13 @@ class RubicCube:
             print('')
 
     def clone(self):
-        # TODO: This method should return another instance of RubicCube with the same configuration as self
+        #This method should return another instance of RubicCube with the same configuration as self
         c = RubicCube()
         c.copy(self)
         return c
 
     def copy(self, aCube):
-        # TODO: This method should copy the configuration of aCube into self
+        #This method should copy the configuration of aCube into self
         self._top = aCube._top
         self._left = aCube._left
         self._front = aCube._front
@@ -70,7 +81,7 @@ class RubicCube:
         return True
 
     def write(self, filename):
-        # TODO: It is interesting to have a method that writes the configuration of the cube into a file
+        #It is interesting to have a method that writes the configuration of the cube into a file
         try:
             f = open(filename, 'w')
             for i in range(3):
@@ -104,7 +115,7 @@ class RubicCube:
             f.close()
 
     def read(self, filename):
-        # TODO: It is interesting to have a method that reads the configuration of the cube from a file
+        #It is interesting to have a method that reads the configuration of the cube from a file
         try:
             f = open(filename, 'r')
             for i in range(3):
@@ -138,7 +149,7 @@ class RubicCube:
             f.close()
 
     def rotateFrontClockwise(self):
-        # TODO: This method should modify the configuration of the cube resulting in the rotation of the front face
+        #This method should modify the configuration of the cube resulting in the rotation of the front face
         # clockwisely
         aux = [self._right[i][0] for i in range(3)]
 
@@ -156,26 +167,26 @@ class RubicCube:
 
         self._rotateClockwise(self._front)
 
-    
     def rotateFrontAntiClockwise(self):
 
-        # TODO: This method should modify the configuration of the cube resulting in the rotation of the front face
+        #This method should modify the configuration of the cube resulting in the rotation of the front face
         # anticlockwisely
         aux = [self._bottom[0][i] for i in range(3)]
-        
+
         for i in range(3):
             self._bottom[0][i] = self._left[i][2]
         for i in range(3):
-            self._left[i][2] = self._top[2][2-i] # not possible to make the rotation with only one for, becouse of the modification of the top face in the same for. The problem is with ther first itereation in top face 
+            self._left[i][2] = self._top[2][
+                2 - i]  # not possible to make the rotation with only one for, becouse of the modification of the top face in the same for. The problem is with ther first itereation in top face
         for i in range(3):
             self._top[2][i] = self._right[i][0]
         for i in range(3):
-            self._right[2-i][0] = aux[i]
+            self._right[2 - i][0] = aux[i]
 
         self._rotateAntiClockwise(self._front)
 
     def rotateTopClockwise(self):
-        # TODO: This method should modify the configuration of the cube resulting in the rotation of the front face
+        #This method should modify the configuration of the cube resulting in the rotation of the front face
         # clockwisely
 
         aux = [self._front[0][i] for i in range(3)]
@@ -199,38 +210,38 @@ class RubicCube:
         self._rotateAntiClockwise(self._top)
 
     def rotateLeftClockwise(self):
-      
+
         aux = [self._bottom[i][0] for i in range(3)]
-      
+
         for i in range(3):
             self._bottom[i][0] = self._front[i][0]
             self._front[i][0] = self._top[i][0]
-            self._top[i][0] = self._back[2-i][2]
-            self._back[2-i][2] = aux[i]
+            self._top[i][0] = self._back[2 - i][2]
+            self._back[2 - i][2] = aux[i]
 
         self._rotateClockwise(self._left)
 
     def rotateLeftAntiClockwise(self):
-      
+
         aux = [self._bottom[i][0] for i in range(3)]
-      
+
         for i in range(3):
-            self._bottom[i][0] = self._back[2-i][2]
-            self._back[2-i][2] = self._top[i][0]
+            self._bottom[i][0] = self._back[2 - i][2]
+            self._back[2 - i][2] = self._top[i][0]
             self._top[i][0] = self._front[i][0]
             self._front[i][0] = aux[i]
 
         self._rotateAntiClockwise(self._left)
 
     def rotateBackClockwise(self):
-        # TODO: This method should modify the configuration of the cube resulting in the rotation of the back face
+        #This method should modify the configuration of the cube resulting in the rotation of the back face
         # clockwisely
-        aux = [self._bottom[2][2-i] for i in range(3)]
+        aux = [self._bottom[2][2 - i] for i in range(3)]
 
         for i in range(3):
-            self._bottom[2][2-i] = self._left[2-i][0]
+            self._bottom[2][2 - i] = self._left[2 - i][0]
         for i in range(3):
-            self._left[2-i][0] = self._top[0][i]  
+            self._left[2 - i][0] = self._top[0][i]
         for i in range(3):
             self._top[0][i] = self._right[i][2]
         for i in range(3):
@@ -239,17 +250,33 @@ class RubicCube:
         self._rotateClockwise(self._back)
 
     def rotateBottomClockwise(self):
-        # TODO: This method should modify the configuration of the cube resulting in the rotation of the bottom face
+        #This method should modify the configuration of the cube resulting in the rotation of the bottom face
         # clockwisely
         aux = [self._front[2][i] for i in range(3)]
-        
+
         for i in range(3):
             self._front[2][i] = self._left[2][i]
-            self._left[2][i] = self._back[2][i] 
+            self._left[2][i] = self._back[2][i]
             self._back[2][i] = self._right[2][i]
             self._right[2][i] = aux[i]
 
         self._rotateClockwise(self._bottom)
+
+    def rotateRightClockwise(self):
+        #TODO...
+        print("ERROR: rotateRightClockwise is not implemented yet")
+
+    def rotateRightAntiClockwise(self):
+        #TODO...
+        print("ERROR: rotateRightAntiClockwise is not implemented yet")
+
+    def rotateBackAntiClockwise(self):
+        #TODO...
+        print("ERROR: rotateBackAntiClockwise is not implemented yet")
+
+    def rotateBottomAntiClockwise(self):
+        #TODO...
+        print("ERROR: rotateBottomAntiClockwise is not implemented yet")
 
 
     # The following function generalizes the process of rotating a face clockwise.
@@ -308,6 +335,21 @@ class RubicCube:
         self._rotateClockwise(self._top)
         self._rotateAntiClockwise(self._bottom)
 
+    def _rotateCubeTopToBottom(self):
+        #TODO...
+        print("ERROR: _rotateCubeTopToBottom is not implemented yet")
+
+    def _rotateCubeBottomToTop(self):
+        #TODO...
+        print("ERROR: _rotateCubeBottomToTop is not implemented yet")
+
+    def _rotateCubeClockwise(self):
+        #TODO...
+        print("ERROR: _rotateCubeClockwise is not implemented yet")
+
+    def _rotateCubeAntiClockwise(self):
+        #TODO...
+        print("ERROR: _rotateCubeAntiClockwise is not implemented yet")
 
 #######
 # TEST FUNCTIONS
@@ -336,7 +378,6 @@ def rotateTopAnticlockwise_test1():
 
     if not c1.equals(c2):
         print('ERROR: There is an error rotating top either clockwisely or anticlockwisely')
-
 
 
 def rotateLeftClockwise_test1():
@@ -393,6 +434,59 @@ def copyCube_test1():
             " performed on one of them. This means that both cubes use the same internal matrices. They have not been"
             " copied, but the cubes use the same matrices instead")
 
+def test_4rotationsDonothing(func):
+    '''This function tests that one application of func on the cube modifies the cube, and that four operations
+    get it back to the original state'''
+    c1 = RubicCube()
+    c2 = RubicCube()
+
+    getattr(c1, func)()
+
+    if c1.equals(c2):
+        print("ERROR: ", func, " has done nothing")
+
+    getattr(c1, func)()
+    getattr(c1, func)()
+    getattr(c1, func)()
+
+    if not c1.equals(c2):
+        print("ERROR: Applying ", func, " four times has not produced the original state")
+
+def test_3and1oppositeOperations(func1, func2):
+    '''This function tests that three applications of one operation produces the same result than one operation of the opposite operation'''
+    c1 = RubicCube()
+    c2 = RubicCube()
+
+    getattr(c1, func1)()
+
+    if c1.equals(c2):
+        print("ERROR: ", func1, " has done nothing")
+
+    getattr(c1, func1)()
+    getattr(c1, func1)()
+    getattr(c2, func2)()
+
+    if not c1.equals(c2):
+        print("ERROR: Applying ", func1, " three times and ", func2, " once on an original copy does not produce the same result")
+
+def test_complimentaryOperation(func1, cubeRotation, func2, cubeAntiRotation):
+    '''This function tests one operation produces the same result as the associated operation once the cube has been rotated.
+    For instance, rotatingLeftClockwise should produce the same result as rotating the cube from left to right, rotating the front face clockwise, and rotating the cube back from right to left'''
+    c1 = RubicCube()
+    c2 = RubicCube()
+
+    getattr(c1, func1)()
+
+    if c1.equals(c2):
+        print("ERROR: ", func1, " has done nothing")
+
+    getattr(c2,cubeRotation)()
+    getattr(c2,func2)()
+    getattr(c2,cubeAntiRotation)()
+
+    if not c1.equals(c2):
+        print("ERROR: test_complimentaryOperation with ", func1, " ", cubeRotation, " ", func2, " ", cubeAntiRotation, "three times and ", func2, " failed")
+
 
 def rotateCubeLeftToRight_test1():
     c1 = RubicCube()
@@ -433,6 +527,22 @@ def copyCube_test1():
             " performed on one of them. This means that both cubes use the same internal matrices. They have not been"
             " copied, but the cubes use the same matrices instead")
 
+def test_colorsArranged():
+    c1 = RubicCube()
+
+    if c1.colorsArranged():
+        print("WARNING: The cube have the colors arranged at the beginning")
+
+    c1.setStandardSolution()
+
+    if not c1.colorsArranged():
+        print("ERROR: the cube with the standard solution does not return True for colorsGrouped method")
+
+    c1.rotateFrontClockwise()
+
+    if c1.colorsArranged():
+        print("ERROR: the cube with the standard solution and front face rotated clockwise once says that has its color arranged")
+
 
 def runTests():
     copyCube_test1()
@@ -441,6 +551,53 @@ def runTests():
     rotateCubeLeftToRight_test1()
     rotateLeftClockwise_test1()
 
+    test_4rotationsDonothing('rotateTopClockwise')
+    test_4rotationsDonothing('rotateLeftClockwise')
+    test_4rotationsDonothing('rotateFrontClockwise')
+    test_4rotationsDonothing('rotateRightClockwise')
+    test_4rotationsDonothing('rotateBackClockwise')
+    test_4rotationsDonothing('rotateBottomClockwise')
+    test_4rotationsDonothing('rotateTopAntiClockwise')
+    test_4rotationsDonothing('rotateLeftAntiClockwise')
+    test_4rotationsDonothing('rotateFrontAntiClockwise')
+    test_4rotationsDonothing('rotateRightAntiClockwise')
+    test_4rotationsDonothing('rotateBackAntiClockwise')
+    test_4rotationsDonothing('rotateBottomAntiClockwise')
+    test_4rotationsDonothing('_rotateCubeLeftToRight')
+    test_4rotationsDonothing('_rotateCubeRightToLeft')
+    test_4rotationsDonothing('_rotateCubeTopToBottom')
+    test_4rotationsDonothing('_rotateCubeBottomToTop')
+    test_4rotationsDonothing('_rotateCubeClockwise')
+    test_4rotationsDonothing('_rotateCubeAntiClockwise')
+
+    test_3and1oppositeOperations('rotateTopClockwise', 'rotateTopAntiClockwise')
+    test_3and1oppositeOperations('rotateTopAntiClockwise', 'rotateTopClockwise')
+    test_3and1oppositeOperations('rotateLeftClockwise', 'rotateLeftAntiClockwise')
+    test_3and1oppositeOperations('rotateLeftAntiClockwise', 'rotateLeftClockwise')
+    test_3and1oppositeOperations('rotateFrontClockwise', 'rotateFrontAntiClockwise')
+    test_3and1oppositeOperations('rotateFrontAntiClockwise', 'rotateFrontClockwise')
+    test_3and1oppositeOperations('rotateRightClockwise', 'rotateRightAntiClockwise')
+    test_3and1oppositeOperations('rotateRightAntiClockwise', 'rotateRightClockwise')
+    test_3and1oppositeOperations('rotateBackClockwise', 'rotateBackAntiClockwise')
+    test_3and1oppositeOperations('rotateBackAntiClockwise', 'rotateBackClockwise')
+    test_3and1oppositeOperations('rotateBottomClockwise', 'rotateBottomAntiClockwise')
+    test_3and1oppositeOperations('rotateBottomAntiClockwise', 'rotateBottomClockwise')
+    test_3and1oppositeOperations('_rotateCubeLeftToRight','_rotateCubeRightToLeft')
+    test_3and1oppositeOperations('_rotateCubeRightToLeft','_rotateCubeLeftToRight')
+    test_3and1oppositeOperations('_rotateCubeTopToBottom','_rotateCubeBottomToTop')
+    test_3and1oppositeOperations('_rotateCubeBottomToTop','_rotateCubeTopToBottom')
+    test_3and1oppositeOperations('_rotateCubeClockwise','_rotateCubeAntiClockwise')
+    test_3and1oppositeOperations('_rotateCubeAntiClockwise','_rotateCubeClockwise')
+
+    test_complimentaryOperation('rotateLeftClockwise','_rotateCubeLeftToRight','rotateFrontClockwise','_rotateCubeRightToLeft')
+    test_complimentaryOperation('rotateRightClockwise','_rotateCubeClockwise','rotateBottomClockwise','_rotateCubeAntiClockwise')
+    test_complimentaryOperation('rotateBackAntiClockwise','_rotateCubeTopToBottom','rotateTopAntiClockwise','_rotateCubeBottomToTop')
+    test_complimentaryOperation('rotateFrontAntiClockwise','_rotateCubeLeftToRight','rotateRightAntiClockwise','_rotateCubeRightToLeft')
+    test_complimentaryOperation('rotateBottomAntiClockwise','_rotateCubeAntiClockwise','rotateRightAntiClockwise','_rotateCubeClockwise')
+    test_complimentaryOperation('rotateTopClockwise','_rotateCubeBottomToTop','rotateBackClockwise','_rotateCubeTopToBottom')
+    #test_complimentaryOperation('','','','')
+
+    test_colorsArranged()
 
 if __name__ == "__main__":
     c = RubicCube()
