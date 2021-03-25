@@ -338,67 +338,27 @@ class RubicCube:
         self._rotateAntiClockwise(self._bottom)
 
     def _rotateCubeTopToBottom(self):
-        
-        
-        #Como se codifica a continuación es como debería ser, por las posiciones de las caras back respecto a bottom y bottom respecto a top
-        #No funciona bien ya que cuando se hace la asignación en la matriz, realmente no los está asignando o hace algo inesperado o que no entiendo
-              
-        print('\n')
-        #imprimimos el cubo
-        self.print()
-        #variable auxiliar para guardar la cara top
+        print('\n--')
         aux = self._top
-        
+
         #top es front al girar el cubo
         self._top = self._front
 
         #front es bottom al girar el cubo
         self._front = self._bottom
         
-        '''        
-        #bottom es back al girar el cubo pero según se indica en el for, para que correspondan las casillas al realizar el giro
-        #De esta forma no funciona
-        for i in range(3):
-            for j in range(3):
-                ##print(self._bottom[i][j],'---', self._back[2-i][2-j])
-                self._bottom[i][j] = self._back[2-i][2-j]
-                print('asignado a bottom: ',self._bottom[i][j], '\t')
-            print('\n') 
-        '''
-
-        back = np.flip(self._back, (0,1))
-        self._bottom = back    
+        #bottom es back rotada 180º al girar el cubo
+        self._bottom = np.flip(self._back, (0,1))    
 
         #back es aux(top) al girar el cubo pero según se indica en el for, para que correspondan las casillas al realizar el giro
-        #Por qué esta asignacion funciona y las otas no?
         for k in range(3):
             for l in range(3):
                 self._back[2-k][2-l] = aux[k][l]
-                #print('asignado a back: ',self._back[2-k][2-l], '\t')
-            print('\n') 
-        
-        # Rotate top and bottom faces accordingly
-        self._rotateClockwise(self._right)
-        self._rotateAntiClockwise(self._left)
-        
-        ###no cambian las caras (front, top y bottom) correctamente, sin embargo, la impresión de las caras después de asignarlas es correcta
-        self.print()
-
-        '''
-        aux = self._top
-        self._top = self._front
-        self._front = self._bottom
-        self._bottom = self._back
-        self._back = aux
 
         # Rotate top and bottom faces accordingly
         self._rotateClockwise(self._right)
         self._rotateAntiClockwise(self._left)
-                
-        ###no cambian las caras (front, top y bottom) correctamente, sin embargo, la impresión de las caras después de asignarlas es correcta
-        self.print()
-        '''
-        
+
 
 
     def _rotateCubeBottomToTop(self):
