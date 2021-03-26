@@ -1,3 +1,5 @@
+import numpy as np
+
 class RubicCube:
     def __init__(self):
         # For debugging purposes, it is interesting that each little face has a different name
@@ -336,9 +338,27 @@ class RubicCube:
         self._rotateAntiClockwise(self._bottom)
 
     def _rotateCubeTopToBottom(self):
-        #TODO...
-        print("ERROR: _rotateCubeTopToBottom is not implemented yet")
+        aux = self._top
 
+        #top es front al girar el cubo
+        self._top = self._front
+
+        #front es bottom al girar el cubo
+        self._front = self._bottom
+        
+        #bottom es back rotada 180º al girar el cubo
+        self._bottom = np.flip(self._back, (0,1))    
+
+        #back es aux(top) al girar el cubo pero según se indica en el for, para que correspondan las casillas al realizar el giro
+        for k in range(3):
+            for l in range(3):
+                self._back[2-k][2-l] = aux[k][l]
+
+        # Rotate top and bottom faces accordingly
+        self._rotateClockwise(self._right)
+        self._rotateAntiClockwise(self._left)
+
+        
     def _rotateCubeBottomToTop(self):
         #TODO...
         print("ERROR: _rotateCubeBottomToTop is not implemented yet")
