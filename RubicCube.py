@@ -338,7 +338,6 @@ class RubicCube:
         self._rotateAntiClockwise(self._bottom)
 
     def _rotateCubeTopToBottom(self):
-        print('\n--')
         aux = self._top
 
         #top es front al girar el cubo
@@ -359,8 +358,7 @@ class RubicCube:
         self._rotateClockwise(self._right)
         self._rotateAntiClockwise(self._left)
 
-
-
+        
     def _rotateCubeBottomToTop(self):
         #TODO...
         print("ERROR: _rotateCubeBottomToTop is not implemented yet")
