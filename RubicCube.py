@@ -265,12 +265,33 @@ class RubicCube:
         self._rotateClockwise(self._bottom)
 
     def rotateRightClockwise(self):
-        #TODO...
-        print("ERROR: rotateRightClockwise is not implemented yet")
+        aux = [self._front[i][2] for i in range(3)]
+
+        for i in range(3):
+            self._front[i][2] = self._bottom[i][2]
+        for i in range(3):
+            self._bottom[i][2] = self._back[2-i][0]
+        for i in range(3):
+            self._back[2-i][0] = self._top[i][2]
+        for i in range(3):
+            self._top[i][2] = aux[i]
+
+        self._rotateClockwise(self._right)
 
     def rotateRightAntiClockwise(self):
-        #TODO...
-        print("ERROR: rotateRightAntiClockwise is not implemented yet")
+        aux = [self._front[i][2] for i in range(3)]
+
+        for i in range(3):
+            self._front[i][2] = self._top[i][2]
+        for i in range(3):
+            self._top[i][2] = self._back[2-i][0]
+        for i in range(3):
+            self._back[2-i][0] = self._bottom[i][2]
+        for i in range(3):
+            self._bottom[i][2] = aux[i]
+
+
+        self._rotateAntiClockwise(self._right)
 
     def rotateBackAntiClockwise(self):
         #TODO...
