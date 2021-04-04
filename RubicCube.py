@@ -294,12 +294,33 @@ class RubicCube:
         self._rotateAntiClockwise(self._right)
 
     def rotateBackAntiClockwise(self):
-        #TODO...
-        print("ERROR: rotateBackAntiClockwise is not implemented yet")
+        #This method should modify the configuration of the cube resulting in the rotation of the back face
+        # Anticlockwisely
+        aux = [self._bottom[2][2 - i] for i in range(3)]
+
+        for i in range(3):
+            self._bottom[2][2-i] = self._right[i][2]
+        for i in range(3):
+            self._right[i][2] = self._top[0][i]
+        for i in range(3):
+            self._top[0][i] = self._left[2-i][0]
+        for i in range(3):
+            self._left[2-i][0] = aux[i]
+
+        self._rotateAntiClockwise(self._back)
 
     def rotateBottomAntiClockwise(self):
-        #TODO...
-        print("ERROR: rotateBottomAntiClockwise is not implemented yet")
+        #This method should modify the configuration of the cube resulting in the rotation of the bottom face
+        # clockwisely
+        aux = [self._front[2][i] for i in range(3)]
+
+        for i in range(3):
+            self._front[2][i] = self._right[2][i]
+            self._right[2][i] = self._back[2][i]
+            self._back[2][i] = self._left[2][i]
+            self._left[2][i] = aux[i]
+
+        self._rotateAntiClockwise(self._bottom)
 
 
     # The following function generalizes the process of rotating a face clockwise.
