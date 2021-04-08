@@ -381,37 +381,76 @@ class RubicCube:
 
     def _rotateCubeTopToBottom(self):
         aux = self._top
-
-        #top es front al girar el cubo
-        self._top = self._front
-
-        #front es bottom al girar el cubo
-        self._front = self._bottom
         
+        self._top = np.flip(self._back, (0,1))  
+
+        for i in range(3):
+            for j in range(3):
+                self._back[2-j][i] = self._bottom[j][2-i]
+
+        self._bottom = self._front       
         #bottom es back rotada 180º al girar el cubo
-        self._bottom = np.flip(self._back, (0,1))    
+        self._front = aux  
+        
+        # Rotate top and bottom faces accordingly
+        self._rotateClockwise(self._left)
+        self._rotateAntiClockwise(self._right)
 
-        #back es aux(top) al girar el cubo pero según se indica en el for, para que correspondan las casillas al realizar el giro
-        for k in range(3):
-            for l in range(3):
-                self._back[2-k][2-l] = aux[k][l]
 
+
+    def _rotateCubeBottomToTop(self):
+        aux = self._bottom
+
+        self._bottom = np.flip(self._back, (0,1))
+        
+        for i in range(3):
+            for j in range(3):
+                self._back[2-j][i] = self._top[j][2-i]
+        self._top = self._front       
+        self._front = aux  
         # Rotate top and bottom faces accordingly
         self._rotateClockwise(self._right)
         self._rotateAntiClockwise(self._left)
 
-        
-    def _rotateCubeBottomToTop(self):
-        #TODO...
-        print("ERROR: _rotateCubeBottomToTop is not implemented yet")
-
     def _rotateCubeClockwise(self):
-        #TODO...
-        print("ERROR: _rotateCubeClockwise is not implemented yet")
+        aux = self._top
+
+        self._top =  np.flip(np.transpose(self._left), 1)
+        for i in range(3):
+            for j in range(3):
+                self._left[2-j][i] = self._bottom[2-i][2-j]
+        for i in range(3):
+            for j in range(3):
+                self._bottom[2-i][2-j] = self._right[j][2-i]
+
+        for i in range(3):
+            for j in range(3):
+                self._right[i][j] = aux[2-j][i]    
+
+        # Rotate top and bottom faces accordingly
+        self._rotateClockwise(self._front)
+        self._rotateAntiClockwise(self._back)
+
+
 
     def _rotateCubeAntiClockwise(self):
-        #TODO...
-        print("ERROR: _rotateCubeAntiClockwise is not implemented yet")
+        aux = self._top
+
+        self._top =  np.flip(np.transpose(self._right), 0)
+        for i in range(3):
+            for j in range(3):
+                self._right[j][2-i] = self._bottom[2-i][2-j]
+        for i in range(3):
+            for j in range(3):
+                self._bottom[i][j] = self._left[j][2-i]
+
+        for i in range(3):
+            for j in range(3):
+                self._left[i][j] = aux[j][2-i]    
+
+        # Rotate top and bottom faces accordingly
+        self._rotateClockwise(self._back)
+        self._rotateAntiClockwise(self._front)
 
 #######
 # TEST FUNCTIONS
