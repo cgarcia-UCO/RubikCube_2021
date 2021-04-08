@@ -64,12 +64,22 @@ class RubicCube:
 
     def copy(self, aCube):
         #This method should copy the configuration of aCube into self
+
+        faces1 = [self._top, self._bottom, self._left, self._front, self._right, self._back]
+        faces2 = [aCube._top, aCube._bottom, aCube._left, aCube._front, aCube._right, aCube._back]
+        '''
         self._top = aCube._top
         self._left = aCube._left
         self._front = aCube._front
         self._right = aCube._right
         self._back = aCube._back
         self._bottom = aCube._bottom
+        '''
+        for face1, face2 in zip(faces1, faces2):
+            for i in range(3):
+                for j in range(3):
+                    face2[i][j] = face1[i][j]
+
 
     def equals(self, aCube):
         faces1 = [self._top, self._bottom, self._left, self._front, self._right, self._back]
