@@ -65,7 +65,7 @@ class RubikSearchState(SearchState):
     def getPath(self):
         path = []
         if self._bestParent is not None:
-            path = self._bestParent.getPath
+            path = self._bestParent.getPath()
 
         path.append(self._operation)
         return path
