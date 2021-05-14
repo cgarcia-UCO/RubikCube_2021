@@ -5,5 +5,4 @@ The idea is that students of the course Intelligent Systems of the University of
 
 # Important notes
 * Submit your changes by "pull requests" with **small** pieces of code, and **once you have carried the test you think necessary**.
-* **DO NOT SUBMIT CODE THAT HAD NOT BEEN TESTED**
 * The teacher will basically do nothing but test your code, by programming the corresponding test functions, and propose new steps with the goal of completing the code.
