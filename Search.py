@@ -40,6 +40,7 @@ class RubikSearchState(SearchState):
         self._operation = operation
 
     def equals(self, anotherState):
+        #this function should return True if the cube state in self is the same as the cube state in anotherState
         return self._cube.equals(anotherState._cube)
 
 
