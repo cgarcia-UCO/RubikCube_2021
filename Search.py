@@ -40,27 +40,81 @@ class RubikSearchState(SearchState):
         self._operation = operation
 
     def equals(self, anotherState):
-        # TODO this function should return True if the cube state in self is the same as the cube state in anotherState
-        pass
+        return self._cube.equals(anotherState._cube)
 
 
     #This funciton must generate the search states produced after applying the operations on self
     def getDescendants(self):
-        #TODO. My suggestion is to create a list with the names of the operations as strings, ['rotateTopClockwise, ...]
+        #My suggestion is to create a list with the names of the operations as strings, ['rotateTopClockwise, ...]
         #Then, a loop goes over the operations and everty time, it clones the current states, applies the corresponding
         #operation with the function
         # getattr(newCube, operation)()
         #and append the new state into a list which is returned at the end of the function
         #Recall that you should return RubickSearchStates with depth incremented, self as the best parent, and the
         #operation that produced it
-        pass
+
+        ops = ['rotateTopClockwise',
+              'rotateTopAntiClockwise',
+              'rotateLeftClockwise',
+              'rotateLeftAntiClockwise',
+              'rotateFrontClockwise',
+              'rotateFrontAntiClockwise',
+              'rotateRightClockwise',
+              'rotateRightAntiClockwise',
+              'rotateBackClockwise',
+              'rotateBackAntiClockwise',
+              'rotateBottomClockwise',
+              'rotateBottomAntiClockwise']
+
+        descendants = []
+
+        for op in ops:
+            cube = self._cube.clone()
+            getattr(cube, op)()
+            descendants.append(RubikSearchState(cube, self.depth+1, self, op))
+
+        return descendants
 
     #This function is similar to the previous one, but the RubikSearchStates that it creates should have the inverse
     #operations, instead of those that produced them. My suggestion is to create a dictionary with the inverse operation
     #for each operation on the Rubik cube
     def getAntecedents(self):
-        #TODO
-        pass
+        ops = ['rotateTopClockwise',
+              'rotateTopAntiClockwise',
+              'rotateLeftClockwise',
+              'rotateLeftAntiClockwise',
+              'rotateFrontClockwise',
+              'rotateFrontAntiClockwise',
+              'rotateRightClockwise',
+              'rotateRightAntiClockwise',
+              'rotateBackClockwise',
+              'rotateBackAntiClockwise',
+              'rotateBottomClockwise',
+              'rotateBottomAntiClockwise']
+
+        inverseOperation = {
+            'rotateTopClockwise':'rotateTopAntiClockwise',
+            'rotateTopAntiClockwise':'rotateTopClockwise',
+            'rotateLeftClockwise':'rotateLeftAntiClockwise',
+            'rotateLeftAntiClockwise':'rotateLeftClockwise',
+            'rotateFrontClockwise':'rotateFrontAntiClockwise',
+            'rotateFrontAntiClockwise':'rotateFrontClockwise',
+            'rotateRightClockwise':'rotateRightAntiClockwise',
+            'rotateRightAntiClockwise':'rotateRightClockwise',
+            'rotateBackClockwise':'rotateBackAntiClockwise',
+            'rotateBackAntiClockwise':'rotateBackClockwise',
+            'rotateBottomClockwise':'rotateBottomAntiClockwise',
+            'rotateBottomAntiClockwise':'rotateBottomClockwise'
+        }
+
+        antecedents = []
+
+        for op in ops:
+            cube = self._cube.clone()
+            getattr(cube, op)()
+            antecedents.append(RubikSearchState(cube, self.depth + 1, self, inverseOperation[op]))
+
+        return antecedents
 
 
     #This function returns a list with the operations from the initial state to this one, according to the
@@ -81,8 +135,13 @@ class BidirectionalSearch():
     #lists of the two searches. My suggestion is to use lists. Besides, the frontiers should contain
     #RubikSearchStates of the initial and goal states
     def __init__(self, initialState, goalState):
-        #TODO
-        pass
+        self.initialState = initialState
+        self.goalState = goalState
+        self.top_frontera = [RubikSearchState(initialState, 0, None, None)]
+        self.top_explorados = []
+        self.bottom_frontera = [RubikSearchState(goalState, 0, None, None)]
+        self.bottom_explorados = []
+        self.counter = 0
 
 
     #This function gets the first state of the frontier structure in the top search.
@@ -92,8 +151,26 @@ class BidirectionalSearch():
     #Otherwise, it generates the descendants of the state, checks that they are not in the frontier or the explored
     #states of the top search, and in this case, insert it in frontier at the end.
     def _iterateTopSearch(self):
-        #TODO
-        pass
+        state = self.top_frontera.pop(0)
+        for s in self.bottom_frontera:
+            if state.equals(s):
+                bottom_path = s.getPath()[::-1]
+                top_path = state.getPath()
+                return top_path + bottom_path
+
+        for s in self.bottom_explorados:
+            if state.equals(s):
+                bottom_path = s.getPath()[::-1]
+                top_path = state.getPath()
+                return top_path + bottom_path
+
+        descendants = state.getDescendants()
+        for descendant in descendants:
+            if descendant not in self.top_frontera and descendant not in self.top_explorados:
+                self.top_frontera.append(descendant)
+
+        self.top_explorados.append(state)
+        return None
 
     #This function is similar to the previous one, but instead of generating the descendants, it generates
     #the antecendents of the state (obviously, using frontier and explored from the bottom search).
@@ -101,14 +178,37 @@ class BidirectionalSearch():
     # This means, the path from the state from the top search is taken as it is, and the path from the state from
     # the bottom search should be inverted.
     def _iterateBottomSearch(self):
-        #TODO
-        pass
+        state = self.bottom_frontera.pop(0)
+        for s in self.top_frontera:
+            if state.equals(s):
+                bottom_path = state.getPath()[::-1]
+                top_path = s.getPath()
+                return top_path + bottom_path
+
+        for s in self.top_explorados:
+            if state.equals(s):
+                bottom_path = state.getPath()[::-1]
+                top_path = s.getPath()
+                return top_path + bottom_path
+
+        antecedents = state.getAntecedents()
+        for antecedent in antecedents:
+            if antecedent not in self.bottom_frontera and antecedent not in self.bottom_explorados:
+                self.bottom_frontera.append(antecedent)
+
+        self.bottom_explorados.append(state)
+        return None
 
     #This method should iterate while there are RubikSearchStates in any frontier, calling iterateTopSearch and
     #iterateBottomSearch alterantively, and returning the solution as soon as it is found.
     def run(self):
-        #TODO
-        pass
+        while len(self.top_frontera) > 0 or len(self.bottom_frontera) > 0:
+            path = self._iterateTopSearch()
+            if path is not None:
+                return path
+            path = self._iterateBottomSearch()
+            if path is not None:
+                return path
 
 
 def drawCube(cube):
@@ -136,7 +236,7 @@ if __name__ == "__main__":
 
     while not thisIsTheTest:
         c1.setStandardSolution()
-        ops = c1.shuffle(4)
+        ops = c1.shuffle(6)
 
         search = BidirectionalSearch(c1,c2)
         result = search.run()
