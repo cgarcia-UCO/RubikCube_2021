@@ -1,6 +1,9 @@
+import sys
 from abc import ABC, abstractmethod
-from RubicCube import RubicCube
 
+from MagicCube.cube_interactive import Cube
+from RubicCube import RubicCube
+from matplotlib import pyplot as plt
 
 #This is an abstract class to represent what a search state should look like.
 #The fact is that search states used by graph-based search methods have to store, at least, their costs and links
@@ -108,11 +111,26 @@ class BidirectionalSearch():
         pass
 
 
+def drawCube(cube):
+    c3 = cube.clone()
+    c3._rotateClockwise(c3._top)
+    c3._rotateClockwise(c3._left)
+    c3._rotateClockwise(c3._right)
+    c3._rotateClockwise(c3._bottom)
+    c3._rotateClockwise(c3._front)
+    c3._rotateClockwise(c3._back)
+    cube_graph = Cube(N, arrays=[c3._top, c3._bottom, c3._left, c3._right, c3._back, c3._front])
+    cube_graph.draw_interactive()
+    plt.show()
+
+
 
 if __name__ == "__main__":
     c1 = RubicCube()
     c1.setStandardSolution()
     c2 = c1.clone()
+    N = 3  # Esto es una cosa que necesita el cube_interactive
+    print("Impresión gráfica del cubo gracias a: https://github.com/davidwhogg/MagicCube")
 
     thisIsTheTest = False
 
@@ -127,7 +145,24 @@ if __name__ == "__main__":
 
         if len(result) == len(ops):
             thisIsTheTest = True
-            print(ops)
-            print(result)
+            ops_traslation = {'rotateTopClockwise': 'u',
+                              'rotateTopAntiClockwise': 'U',
+                              'rotateLeftClockwise': 'l',
+                              'rotateLeftAntiClockwise': 'L',
+                              'rotateFrontClockwise': 'f',
+                              'rotateFrontAntiClockwise': 'F',
+                              'rotateRightClockwise': 'r',
+                              'rotateRightAntiClockwise': 'R',
+                              'rotateBackClockwise': 'b',
+                              'rotateBackAntiClockwise': 'B',
+                              'rotateBottomClockwise': 'd',
+                              'rotateBottomAntiClockwise': 'D'}
+            ops.reverse()
+            print("Shuffle in reverse order:",ops)
+            print("Solution:", result)
+            operations = list(map(lambda x: ops_traslation[x], result))
+            print("Press keys:", operations)
+            thisIsTheTest = True
+            drawCube(c1)
         else:
             print("Starting again because I found a shorter (better) solution")

@@ -14,12 +14,18 @@ class RubicCube:
         self._bottom = [['S', 'T', 'U'], ['V', 'W', 'X'], ['Y', 'Z', '?']]
 
     def setStandardSolution(self):
-        self._top = [['a', 'a', 'a'], ['a', 'a', 'a'], ['a', 'a', 'a']]
-        self._left = [['b', 'b', 'b'], ['b', 'b', 'b'], ['b', 'b', 'b']]
-        self._front = [['c', 'c', 'c'], ['c', 'c', 'c'], ['c', 'c', 'c']]
-        self._right = [['d', 'd', 'd'], ['d', 'd', 'd'], ['d', 'd', 'd']]
-        self._back = [['e', 'e', 'e'], ['e', 'e', 'e'], ['e', 'e', 'e']]
-        self._bottom = [['f', 'f', 'f'], ['f', 'f', 'f'], ['f', 'f', 'f']]
+        self._top = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+        self._left = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+        self._front = [[2, 2, 2], [2, 2, 2], [2, 2, 2]]
+        self._right = [[3, 3, 3], [3, 3, 3], [3, 3, 3]]
+        self._back = [[4, 4, 4], [4, 4, 4], [4, 4, 4]]
+        self._bottom = [[5, 5, 5], [5, 5, 5], [5, 5, 5]]
+        # self._top = [['a', 'a', 'a'], ['a', 'a', 'a'], ['a', 'a', 'a']]
+        # self._left = [['b', 'b', 'b'], ['b', 'b', 'b'], ['b', 'b', 'b']]
+        # self._front = [['c', 'c', 'c'], ['c', 'c', 'c'], ['c', 'c', 'c']]
+        # self._right = [['d', 'd', 'd'], ['d', 'd', 'd'], ['d', 'd', 'd']]
+        # self._back = [['e', 'e', 'e'], ['e', 'e', 'e'], ['e', 'e', 'e']]
+        # self._bottom = [['f', 'f', 'f'], ['f', 'f', 'f'], ['f', 'f', 'f']]
 
     def shuffle(self, numOperations):
         operations = ['rotateTopClockwise',
